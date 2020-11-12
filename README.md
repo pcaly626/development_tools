@@ -1,16 +1,16 @@
-##Development Tools
+## Development Tools
 Easy to install and useful forms for DevOps support.
 
-#Code Coverage
+# Code Coverage
 Adding the code coverage output to the `branches` directory will dynamically display a link to the index page.
 
-#Issue Tracker
+# Issue Tracker
 Simple way for developers to report and track code issues or request assistance. 
 
-#Code Review
+# Code Review
 Form to plan code reviews and notify managers
 
-#Installation
+# Installation
 Requirements: 
 1. Linux OS
 2. Apache Server
@@ -26,7 +26,7 @@ Setup:
 5. `node server.js`
 6. Now the Website should be up and working
 
-#Note - 2 things to do:
+# Note - 2 things to do:
 1. Edit server.js with credentials and emails for notifications
 
 2. You will need to edit the crediential file (backend/keys/credentials.json.template => credentials.json) with necessary information.
