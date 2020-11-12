@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Create Code Review</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./create_code_review.css">
+        <link rel="stylesheet" href="../../master.css">
+        <nav class="header">
+            <a href="../../index.html"><img class="white-icon" src="../../assets/icons/home-solid.svg" height="23" width="35"/></a>
+            <a href="#"><img class="white-icon" src="../../assets/icons/plus-square-regular.svg" height="18" width="35"/><span>Create Code Review</span></a>
+            <a href="../code_review.html"><img class="white-icon" src="../../assets/icons/columns-solid.svg" height="18" width="35"/><span>Code Review Dashboard</span></a>
+        </nav>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h2>Create Code Review</h2>
+            </div>
+            <div class="row">
+                <form id="code_review_form">
+                    <div class="row">
+                        <label for="author">Author</label>
+                    </div>
+                    <div class="row">
+                        <select name="author" id="author">
+                            <option selected disabled>Choose Type</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <label for="reviewer">Reviewer</label>
+                    </div>
+                    <div class="row">
+                        <br/>
+                        <select name="reviewer" id="reviewer">
+                            <option selected disabled>Choose Type</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <label for="branch">Git Branch</label>
+                    </div>
+                    <div class="row">
+                        <input type="text" name="branch" id="branch"/>
+                    </div>
+                    <br/>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        <script src="./create_code_review.js" type="text/javascript" async defer></script>
+    </body>
+</html>

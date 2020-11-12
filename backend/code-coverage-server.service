@@ -1,0 +1,13 @@
+[Unit]
+Description=Internal Website server
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/html/backend
+Type=simple
+ExecStart=/usr/bin/node /var/www/html/backend/server.js
+Group=jenkins
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

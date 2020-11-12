@@ -1,0 +1,245 @@
+@font-face { font-family: 'Roboto-Regular'; 
+  src: url('./font/Roboto-Regular.tff') format('truetype'); } 
+  @font-face { font-family: 'Roboto-Bold'; 
+      src: url('./font/Roboto-Bold.tff') format('truetype'); } 
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.container {
+  margin: 5% 10% 5% 10%; 
+  width:80%;
+}
+
+nav {
+  background-color: steelblue;
+  top:0;
+  margin: 0;
+  padding: 1%;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: rgb(11, 11, 202);
+}
+
+.white-icon {
+  filter:invert(276%) sepia(76%) saturate(2552%) hue-rotate(174deg) brightness(118%) contrast(119%);
+}
+
+
+
+body {
+  font-family: 'Roboto-Regular',sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+
+.row {
+    width: 100%
+  }
+  
+  .row::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+  
+  /* For mobile phones: */
+[class*="col-"] {
+    width: 100%;
+  }
+  
+  @media only screen and (max-width: 600px ){
+    nav a span {
+      display:none;
+    }
+  }
+
+  @media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+
+   
+  }
+  
+  @media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.arrow:hover {
+    color: blue;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+
+th, td {
+  padding: 10px;
+}
+
+table {
+  width:100%;
+  border-spacing: 0px;
+  text-align: center;
+  overflow: scroll;
+}
+
+table thead tr {
+  background-color: steelblue;
+  color: white;
+
+}
+
+tbody tr:nth-child(even) {
+  background-color: #d6e9fc;
+  width: 100%;
+}
+
+tbody tr:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+
+select {
+  display: block;
+  width: 22%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input[type=textarea] {
+  display: block;
+  width: 30%;
+  padding: .375rem .75rem;
+  font-size: .75rem;
+  line-height: 2.25;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+input[type=text] {
+  display: block;
+  width: 20%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button {
+  padding: 10px 30px 10px 30px;
+  box-shadow: 1px 1px 1px 1px #9e9e9e;
+  text-align: center;
+  display: flex;
+  background-color:steelblue;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+button:hover {
+  background-color: rgb(18, 105, 177);
+}
+
+button:active {
+  background-color: rgb(138, 145, 151);
+}

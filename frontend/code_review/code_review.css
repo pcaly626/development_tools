@@ -1,0 +1,169 @@
+
+.code-review-table {
+    height: 500px;
+    overflow: scroll;
+    border: 5px white solid;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 5px #9e9e9e;
+}
+
+table {
+    width:100%;
+    border-spacing: 0px;
+    text-align: center;
+    overflow: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+th, td {
+    padding: 10px;
+}
+
+
+table thead tr {
+    background-color: steelblue;
+    color: white;
+
+}
+
+tbody tr:nth-child(even) {
+    background-color: #d6e9fc;
+    width: 100%;
+  }
+
+tbody tr:hover {
+    background-color: rgb(235, 235, 235);
+}
+.update-code-review {
+    padding: 10px;
+    box-shadow: 3px 3px black, 0em 0 .4em black;
+    z-index: 200;
+    height: 100%;
+    width: 100%;
+    margin-left: 65%;
+    top: 0%;
+    position: fixed;
+    background-color: white;
+    overflow: scroll;
+}
+
+.update-form-container {
+    margin: 1% 1%;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: 1rem;
+}
+
+input[type=text] {
+    display: block;
+    width: 20%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+select {
+    display: block;
+    width: 22%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input[type=textarea] {
+    display: block;
+    width: 30%;
+    padding: .375rem .75rem;
+    font-size: .75rem;
+    line-height: 2.25;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.code-review-id:hover
+{
+    color: rgb(62, 62, 255);
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.update-code-review-button {
+    padding: 10px 30px 10px 30px;
+    box-shadow: 1px 1px 1px 1px #9e9e9e;
+    text-align: center;
+    display: flex;
+    background-color:steelblue;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+
+.update-code-review-button:hover {
+    background-color: rgb(18, 105, 177);
+}
+
+.update-code-review-button:active {
+    background-color: rgb(138, 145, 151);
+}
+
+@media (min-width:300px) and ( max-width: 600px){
+    .container {
+        width:100%;
+    }
+    .update-ticket {
+        margin-left: 0%;
+    }
+
+    select {
+        width: 50%;
+    }
+
+    input[type='text'] {
+        width: 45%;
+    }
+}

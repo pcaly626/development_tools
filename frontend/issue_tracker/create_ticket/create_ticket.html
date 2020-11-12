@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Create Ticket</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../../master.css">
+        <link rel="stylesheet" href="create_ticket.css">
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h2>Create Ticket</h2>
+            </div>
+            <div class="row">
+                <form id="ticket_form">
+                    <div class="row">
+                        <label for="project" >Project</label>
+                        <input type="text" name="project" id="project"/>
+                        <label for="reporter">Reporter</label>
+                        <input type="text" name="reporter" id="reporter"/>
+                    </div>
+                    <div class="row">
+                        <label for="ticket_type">Ticket Type</label>
+                        <select name="ticket_type" id="ticket_type">
+                            <option selected disabled>Choose Type</option>
+                            <option value="bug">Bug</option>
+                            <option value="incident">Incident</option>
+                            <option value="it_help">IT Help</option>
+                            <option value="database">Database</option>
+                            <option value="website">Website</option>
+                            <option value="access">Access</option>
+                        </select>
+                        <label for="assign">Assign</label>
+                        <input type="text" name="assign" id="assign"/>
+                    </div>
+                    <div class="row">
+                        <label for="priority">Priority</label>
+                        <select name="priority" id="priority" >
+                            <option selected disabled>Choose Priority</option>
+                            <option value="minor">Minor</option>
+                            <option value="medium">Medium</option>
+                            <option value="major">Major</option>
+                            <option value="show_stopper">Show Stopper</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <label for="summary">Summary</label><br/>
+                        <input type="text" name="summary" id="summary"/>
+                    </div>
+                    <div class="row">
+                        <label for="description">Description</label><br/>
+                        <textarea name="description" id="description"></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        <script src="create_ticket.js" async defer></script>
+        <script src="../../master.js" async defer></script>
+    </body>
+</html>
