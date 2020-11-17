@@ -1,4 +1,5 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 const fs = require('fs');
 const mail = require("nodemailer");
 const {google} = require("googleapis");
@@ -93,219 +94,82 @@ function listLabels(auth) {
     }
   });
 }
+/**********************************End of Google OAuth*************************************/
 
-const ticketDatabaseManager = require('./ticket_database_manager');
+const databaseManager = require('./database_manager');
 const codeReviewDatabaseManager = require('./code_review_database_manager');
 
 const PORT = 5000;
 
-const server = http.createServer(function (request, response) {
-    console.log(request.url)
-    if (request.url == '/branches/') {
-        const allBranches = fs.readdirSync('../frontend/branches/');
-        branchList = allBranches.filter( branch => {if(!RegExp('[.]').test(branch)) return branch});        
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        response.write(JSON.stringify({ branches: branchList }));
-        response.end();
-    }
+app.use( (request, response, next) => {
+    response.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+    response.header("Access-Control-Allow-Headers",  "Origin, X-Requested-With, Content-Type, Accept");
+    response.header( "Access-Control-Allow-Origin", "*");
+    next();
+});
 
-    if(request.url == '/ticket/') {
-        console.log("IN TICKET");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
+app.use(express.urlencoded());
+app.use(express.json());  
 
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        }).on('data', function(chunk) {
-            let data = JSON.parse(chunk);
-            let values = Object.keys(data).map( key => {return data[key]})
-           ticketDatabaseManager.insertTicketIntoDatabase(values);
-            response.write(JSON.stringify({status:result, data: values}));
-        }).on( 'end', () => {
-            response.end();
-        })
-    }
-    
-    if( new RegExp ('/ticket/[0-9]').test(request.url) ){
-        let regEx = /\/[0-9]*\//;
-        let ticketID = request.url.match(regEx)[0].split('/')[1];
-        console.log(`IN TICKET and ID is ${ticketID}`);
-
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "PUT, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        }).on('data', function(chunk) {
-            let data = JSON.parse(chunk);
-            delete data.id
-            delete data.create_date
-            let values = Object.keys(data).map( key => {return data[key]})
-           ticketDatabaseManager.updateTicketIntoDatabase(ticketID, values);
-            response.write(JSON.stringify({status:result, ticket: values, id: ticketID}));
-        }).on( 'end', () => {
-            response.end();
-        })
-    }
-
-    if(request.url == '/tickets/') {
-        console.log("IN TICKETS");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        })
-       ticketDatabaseManager.selectAllInCompleteTickets( (data) => {
-            response.write(JSON.stringify({status:result, tickets: data}));
-            response.end();
-        });
-    }
-
-
-    if(request.url == '/complete_tickets/') {
-        console.log("IN COMPLETE TICKETS");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        })
-       ticketDatabaseManager.selectAllCompleteTickets( (data) => {
-            response.write(JSON.stringify({status:result, tickets: data}));
-            response.end();
-        });
-    }
-
-    if(request.url == '/all_tickets/') {
-        console.log("IN ALL TICKETS");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        })
-       ticketDatabaseManager.selectAllTicketInDatabase( (data) => {
-            response.write(JSON.stringify({status:result, tickets: data}));
-            response.end();
-        });
-    }
-
-    if(request.url == '/code_review/') {
-        console.log("IN CODE REVIEW");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        }).on( 'data', function(chunk) {
-            let data = JSON.parse(chunk);
-            let values = Object.keys(data).map( key => {return data[key]})
-            codeReviewDatabaseManager.insertCodeReviewIntoDatabase( values );
-            response.write(JSON.stringify({status:result, data: values}));
-            let transport = mail.createTransport({
-                service: 'gmail',
-                tls:{
-                    requestUnauthorized: false
-                },
-                auth: {
-                    type: 'OAuth2',
-                    user: keys.email_user,
-                    pass: keys.email_password,
-                    clientId: keys.installed.client_id,
-                    clientSecret: keys.installed.client_secret,
-                    refreshToken: tokens.refresh_token
-                }
-            });
-            transport.sendMail({
-                from: 'Web user@email.com',
-                to: "Test user@email.com",
-                subject: `Code Review created for ${data.branch}`,
-                html: 
-                `
-                <div>
-                    <h3>Code Review for ${data.branch}</h3>
-                    <p>Author of the changes: ${data.author}</p>
-                    <p>Reviewer: ${data.reviewer}</p>
-                </div>
-                `
-            }, function(err){
-                if(err) console.log(err.toString())
-            })
-        }).on( 'end', ()=>{
-            response.end();
-        });
-    }
-
-    if(request.url == '/incomplete_code_reviews/') {
-        console.log("IN INCOMPLETE CODE REVIEWS");
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        })
-        codeReviewDatabaseManager.selectAllInCompleteCodeReviews( (data) => {
-            response.write(JSON.stringify({status:result, codeReviews: data}));
-            response.end();
-        });
-    }
-    
-    if( new RegExp ('/code_review/[0-9]').test(request.url) ){
-        let regEx = /\/[0-9]*\//;
-        let codeReviewID = request.url.match(regEx)[0].split('/')[1];
-        console.log(codeReviewID)
-        console.log(`IN CODE REVIEW and ID is ${codeReviewID}`);
-
-        response.writeHead(200, {
-            "Access-Control-Allow-Methods": "PUT, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Origin": "*"
-        });
-
-        let result = 'success';
-        request.on('error', err =>{
-            result = err.message;
-        }).on('data', function(chunk) {
-            let data = JSON.parse(chunk);
-            delete data.id
-            delete data.create_date
-            let values = Object.keys(data).map( key => {return data[key]})
-            codeReviewDatabaseManager.updateCodeReviewIntoDatabase(codeReviewID, values);
-            response.write(JSON.stringify({status:result, codeReviews: values, id: codeReviewID}));
-        }).on( 'end', () => {
-
-            response.end();
-        })
-    }
+app.get( '/branches/', ( request, response) => {
+    const allBranches = fs.readdirSync('../frontend/branches/');
+        branchList = allBranches.filter( branch => {if(!RegExp('[.]').test(branch)) return branch});                
+        response.status(200).send(JSON.stringify({ branches: branchList }))
 })
 
-server.listen(PORT);
-console.log(`Internal site server is running on ${PORT}`)
+app.get( '/tickets/', ( request, response ) => {
+    let result = 'success';
+    if(request.error){
+        result = request.error.toString();
+    }    
+
+    databaseManager.selectAllInCompleteTickets( (data) => {
+        response.send(JSON.stringify({status:result, tickets: data}));
+    });
+});
+
+app.get( '/complete_tickets/', ( request, response ) => {
+
+    let result = 'success';
+    if(request.error)
+    {
+        result = request.error.toString();
+    }
+    databaseManager.selectAllCompleteTickets( (data) => {
+            response.send(JSON.stringify({status:result, tickets: data}));
+    });
+});
+            
+app.post( '/ticket/', ( request, response ) => {
+    let result = 'success';
+
+    if(request.error)
+    {
+        result = request.error.toString();
+    }
+
+    let data = request.body;
+    let values = Object.keys(data).map( key => {return data[key]})
+    databaseManager.insertTicketIntoDatabase(values);
+    response.send(JSON.stringify({status:result, data: values}));
+});
+
+
+app.put( '/ticket/:id/', ( request, response ) => { 
+    let result = 'success';
+    const { id } = request.params;
+    if(request.error) 
+    {
+      result = request.error;
+    }
+    let data = request.body;
+    delete data.id
+    delete data.create_date
+    let values = Object.keys(data).map( key => {return data[key]})
+    databaseManager.updateTicketIntoDatabase(id, values);
+    response.send(JSON.stringify({status:result, ticket: values, id: id}));
+})
+
+app.listen( PORT, () => {
+    console.log(`Internal site server is running on ${PORT}`)
+})
